@@ -24,16 +24,19 @@ enum NUMBER {
 }
 
 class ArabicAndRomeNumberTogetherException extends Exception {}
+class NegativeRomeNumberException extends Exception {}
+class PositiveArabicNumberException extends Exception {}
 class Calculator{
     private int a;
     private int b;
+    private Boolean isRome = false;
 
     private String operator;
     Calculator(String expression) throws ArabicAndRomeNumberTogetherException{
         this.parseExpression(expression.replaceAll(" ", ""));
     }
 
-    public String calc() {
+    public String calc() throws NegativeRomeNumberException, PositiveArabicNumberException {
         int result;
         switch (this.operator) {
             case "+":
@@ -51,6 +54,11 @@ class Calculator{
             default:
                 return "Wrong operator";
         }
+        if (this.isRome & result < 0) {
+            throw new NegativeRomeNumberException();
+        } else if (!this.isRome & result >= 0) {
+            throw new PositiveArabicNumberException();
+        }
         return Integer.toString(result);
     }
 
@@ -66,6 +74,7 @@ class Calculator{
         }
         if (NUMBER.contains(a)) {
             this.a = NUMBER.valueOf(a).value;
+            this.isRome = true;
         } else {
             this.a = Integer.parseInt(a);
         }

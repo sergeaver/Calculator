@@ -9,7 +9,13 @@ public class Main {
             return new Calculator(input).calc();
         }
         catch (ArabicAndRomeNumberTogetherException e) {
-            return "You can't to use arabic and rome numbers together.";
+            return "Error. You can't to use arabic and rome numbers together.";
+        }
+        catch (NegativeRomeNumberException e) {
+            return "Error. Negative rome number.";
+        }
+        catch (PositiveArabicNumberException e) {
+            return "Error. Positive arabic number.";
         }
     }
     public static void main(String[] args) {
